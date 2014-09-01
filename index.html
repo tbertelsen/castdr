@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>DR.dk to Chromecast</title>
+</head>
+<body>
+    <script src="dr2chromecast.js"></script>
+
+    <div id="bookmarklet"> 
+        <a href="javascript:function iprl5(){var d=document,z=d.createElement('scr'+'ipt'),b=d.body,l=d.location;try{if(!b)throw(0);z.setAttribute('src','https://dabble.me/cast/bookmarklet.js?'+(new Date().getTime()));b.appendChild(z);}catch(e){alert('Please wait until the page has loaded.');}}iprl5();void(0)" id="the_bookmarklet">VidCast</a>
+        → drag this bookmarklet to your bookmarks bar &amp; click it when watching DR.dk web tv.
+    </div>
+
+    <div id="submit button">
+    Or enter an URL here:
+    <input name="textbox1" id="textbox1" type="text" />
+    <input name="buttonExecute" onclick="handleUrl(document.getElementById('textbox1').value)" type="button" value="Cast" />
+    </div>
+</body>
+</html>
