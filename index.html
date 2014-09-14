@@ -1,20 +1,127 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>DR.dk to Chromecast</title>
-    <script src="dr2chromecast.js"></script>
-</head>
-<body onload="params()">
-    <div id="bookmarklet"> 
-        <a href="javascript:function iprl5(){var d=document,z=d.createElement('scr'+'ipt'),b=d.body,l=d.location;try{if(!b)throw(0);z.setAttribute('src','https://dabble.me/cast/bookmarklet.js?'+(new Date().getTime()));b.appendChild(z);}catch(e){alert('Please wait until the page has loaded.');}}iprl5();void(0)" id="the_bookmarklet">VidCast</a>
-        → drag this bookmarklet to your bookmarks bar &amp; click it when watching DR.dk web tv.
-    </div>
-
-    <div id="submit button">
-    Or enter an URL here:
-    <input name="urlBox" id="urlBox" type="text" />
-    <input name="buttonExecute" onclick="handleUrl(document.getElementById('urlBox').value)" type="button" value="Cast" />
-    </div>
-</body>
-</html>
+  <head">
+    <meta charset="utf-8">
+    <title>Cast DR</title>
+    <link rel="icon" href="casticon.png" type='image/png'>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="css/bootstrap.css" />
+      <link rel="stylesheet" href="css/bootswatch.min.css" />
+      <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet" />
+      <link href='http://fonts.googleapis.com/css?family=Jura:600' rel='stylesheet' type='text/css' />
+      <script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+      <script type="text/javascript" src="js/drurlhandler.js"></script>
+      <script type="text/javascript" src="js/castplayer.js"></script>
+      <script type="text/javascript" src="js/urlplayer.js"></script>
+      <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-42108651-2', 'foamsnet.com');
+      ga('send', 'pageview');
+      </script>
+    </head>
+    <body onload="onload()">
+      <!-- top bar -->
+      <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="../" class="navbar-brand" style="font-family: 'Jura', sans-serif; font-size: 200%;">Cast DR</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://github.com/tbertelsen/castdr" target="_blank">Source Code</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- end of top bar -->
+      <!-- main body -->
+      <div class="container">
+        <br/>
+        <!-- Bookmarklet -->
+        <div id="bookmarklet">
+          <a href="javascript:javascript:function castdr(){location.href = 'http://localhost:8000/?url=' + encodeURIComponent(location.href); alart('hello');}castdr();void(0)">
+            <img src="casticon.png" alt="CastDR" style="width:36px;height:36px;border:0">
+          </a>
+          → drag this icon to your bookmarks bar &amp; click it when watching DR.dk web tv.
+        </div>
+        <br/>
+        <!-- Controls -->
+        <div class="alert alert-info" style="text-align: center; display:none;" id="controls">
+          <b id="player_now_playing"></b>
+          <br/>
+          <div id="loading_img" style="display: none;"><img src="loader.gif" width="16px"></img><br/></div>
+          <img src="" id="player_img" width="50%" style="display: none;"></img>
+          <div style="margin: 15px auto; width: 75%; vertical-align: top;">
+            <span id="player_current_time">00:00:00</span>
+            <input type="range" id="player_seek_range" onchange="seekTo();" name="points" value="1" min="1" max="10" val="1" style="display: inline-block; width: 50%; position: relative; top:2px; margin: 0 15px;">
+            <span id="player_duration">00:00:00</span>
+          </div>
+          
+          <button onclick="pause();" class="btn btn-default">
+          <span class="glyphicon glyphicon-pause"></span>
+          Pause
+          </button>
+          <button onclick="resume();" class="btn btn-default">
+          <span class="glyphicon glyphicon-play"></span>
+          Resume
+          </button>
+          
+          <button onclick="stop();" class="btn btn-default">
+          <span class="glyphicon glyphicon-stop"></span>
+          Stop
+          </button>
+          <button onclick="volumeMute();" class="btn btn-default">
+          <span class="glyphicon glyphicon-volume-off"></span>
+          </button>
+          <button onclick="volumeDown();" class="btn btn-default">
+          <span class="glyphicon glyphicon-volume-down"></span>
+          </button>
+          <button onclick="volumeUp();" class="btn btn-default">
+          <span class="glyphicon glyphicon-volume-up"></span>
+          </button>
+        </div>
+        <!-- Guide -->
+        <br/><br/>
+        <div class="row">
+          <div class="col-lg-12">
+            <h4>4 simple steps to play dr.dk/tv on Chromecast</h4>
+            <br/>
+            <ol>
+              <li id="extension" style="margin-bottom:10px;">
+                Checking for Chromecast Extension. If you know you don't have the extension, <a href="https://chrome.google.com/webstore/detail/google-cast/boadgeojelhgndaghljhdicfkmllpafd" target="_blank">Click here to Install it</a> and then reload this page.
+              </li>
+              <li style="margin-bottom:10px;">
+                <a onclick="launchApp();" id="chromecast">
+                  Click here to connect to your Chromecast
+                </a>
+              </li>
+              <li style="margin-bottom:10px;">URL:
+                <input
+                type="text"
+                class="form-control"
+                style="width: 800px;"
+                id="url"
+                placeholder="Enter URL to a video on dr.dk/tv" />
+              </li>
+              <li style="margin-bottom:10px;">
+                <button onclick="startPlayback();" id="modal_play" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-play"></span>
+                <span id="modal_play_text">Connect to Chromecast to Start Playback</span>
+                </button>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- end of main body -->
+    </body>
+  </html>

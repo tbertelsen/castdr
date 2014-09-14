@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>DR.dk to Chromecast</title>
+    <script src="js/dr2chromecast.js"></script>
+</head>
+<body onload="params()">
+    <div id="bookmarklet">
+        <a href="javascript:function castdr(){location.href = 'http://localhost:8000/?url=' + encodeURIComponent(location.href); alart('hello');}castdr();void(0)" id="the_bookmarklet">CastDR</a>
+        → drag this bookmarklet to your bookmarks bar &amp; click it when watching DR.dk web tv.
+    </div>
+
+    <div id="submit button">
+    Or enter an URL here:
+    <input name="urlBox" id="urlBox" type="text" />
+    <input name="buttonExecute" onclick="handleUrl(document.getElementById('urlBox').value)" type="button" value="Cast" />
+    </div>
+</body>
+</html>
