@@ -70,7 +70,6 @@ function startPlayback() {
   }
   var url = decodeURIComponent($('#url').val());
   $('#player_now_playing').html('Please wait.');
-  $('#loading_img').show();
   $('#controls').show();
   $('#loading_img').show();
   drUrlHandler.handleUrl(url);
@@ -79,10 +78,11 @@ function startPlayback() {
 function _startPlayback(mediaUrl, title, imgUrl) {
     var contentType = getContentType(mediaUrl);
     player.loadMedia(mediaUrl, contentType, title, imgUrl);
-    $('#player_now_playing').html('Now playing ' + title);
-    $('#player_img').attr("src", imgUrl).show();
-    $('#loading_img').hide();
-    $('#controls').show();
+    $('#player_img').attr("src", imgUrl)
+    // $('#player_now_playing').html('Now playing ' + title);
+    // $('#player_img').attr("src", imgUrl).show();
+    // $('#loading_img').hide();
+    // $('#controls').show();
   }
 
 function pause() {

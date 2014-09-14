@@ -303,18 +303,22 @@ CastPlayer.prototype.onMediaDiscovered = function(how, mediaSession) {
       $('#url').val(this.currentMediaUrl);
     }
     console.log("Restoring active session")
-    var metadata = mediaSession.media.metadata;
-    var title = ''
-    if (metadata.title) {
-      title = metadata.title
-    }
-    $('#player_now_playing').html('Now playing ' + title);
-    if (metadata.images[0]) {
-      $('#player_img').attr("src", metadata.images[0].url).show();
-    }
-    $('#loading_img').hide();
-    $('#controls').show();
   }
+
+  // Update page:
+  var metadata = mediaSession.media.metadata;
+  var title = ''
+  if (metadata.title) {
+    title = metadata.title
+  }
+  $('#player_now_playing').html('Now playing ' + title);
+  if (metadata.images[0]) {
+    $('#player_img').attr("src", metadata.images[0].url).show();
+  }
+  $('#loading_img').hide();
+  $('#controls').show();
+
+
 
   if( this.castPlayerState == PLAYER_STATE.PLAYING ) {
     // start progress timer
