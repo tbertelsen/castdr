@@ -1,23 +1,35 @@
-
 var autoLaunch = false;
+var directData = null;
 
 function onload() {
-  var url = getUrlParameter("url")
+  var url = getUrlParameter("url");
+  var directDataBool = getUrlParameter("directData");
+  if (directDataBool) {
+    var mediaUrl = getUrlParameter("mediaUrl");
+    var imageUrl = getUrlParameter("imageUrl");
+    var title = getUrlParameter("title");
+    directData = {mediaUrl : mediaUrl, imageUrl : imageUrl, title : title};
+  }
+
   if (url) {
     $('#url').val(url);
-    autoLaunch = true;
   }
+
+  autoLaunch = directData || url;
 }
 
 function getUrlParameter(sParam) {
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++)  {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) {
-            return decodeURIComponent(sParameterName[1]);
-        }
+  var sPageURL = window.location.search.substring(1);
+  var sURLVariables = sPageURL.split('&');
+  for (var i = 0; i < sURLVariables.length; i++) {
+    if (sURLVariables[i] == sParam) {
+      return true;
     }
+    var sParameterName = sURLVariables[i].split('=');
+    if (sParameterName[0] == sParam) {
+      return decodeURIComponent(sParameterName[1]);
+    }
+  }
 }
 
 var player;
@@ -41,19 +53,40 @@ function launchApp() {
 
 function getContentType(url) {
   var ext = url.split('.').pop();
-  var formats = [
-    {ext: 'mkv', type: 'video'},
-    {ext: 'webm', type: 'video'},
-    {ext: 'mp4', type: 'video'},
-    {ext: 'm4v', type: 'video'},
-    {ext: 'm4a', type: 'audio'},
-    {ext: 'jpeg', type: 'image'},
-    {ext: 'jpg', type: 'image'},
-    {ext: 'gif', type: 'image'},
-    {ext: 'png', type: 'image'},
-    {ext: 'bmp', type: 'image'},
-    {ext: 'webp', type: 'image'}
-  ];
+  var formats = [{
+    ext: 'mkv',
+    type: 'video'
+  }, {
+    ext: 'webm',
+    type: 'video'
+  }, {
+    ext: 'mp4',
+    type: 'video'
+  }, {
+    ext: 'm4v',
+    type: 'video'
+  }, {
+    ext: 'm4a',
+    type: 'audio'
+  }, {
+    ext: 'jpeg',
+    type: 'image'
+  }, {
+    ext: 'jpg',
+    type: 'image'
+  }, {
+    ext: 'gif',
+    type: 'image'
+  }, {
+    ext: 'png',
+    type: 'image'
+  }, {
+    ext: 'bmp',
+    type: 'image'
+  }, {
+    ext: 'webp',
+    type: 'image'
+  }];
   for (var i = 0; i < formats.length; i++) {
     if (formats[i].ext == ext) {
       return formats[i].type + "/" + ext;
@@ -76,14 +109,14 @@ function startPlayback() {
 }
 
 function _startPlayback(mediaUrl, title, imgUrl) {
-    var contentType = getContentType(mediaUrl);
-    player.loadMedia(mediaUrl, contentType, title, imgUrl);
-    $('#player_img').attr("src", imgUrl)
-    // $('#player_now_playing').html('Now playing ' + title);
-    // $('#player_img').attr("src", imgUrl).show();
-    // $('#loading_img').hide();
-    // $('#controls').show();
-  }
+  var contentType = getContentType(mediaUrl);
+  player.loadMedia(mediaUrl, contentType, title, imgUrl);
+  $('#player_img').attr("src", imgUrl)
+  // $('#player_now_playing').html('Now playing ' + title);
+  // $('#player_img').attr("src", imgUrl).show();
+  // $('#loading_img').hide();
+  // $('#controls').show();
+}
 
 function pause() {
   if (player.session != null) {
@@ -103,7 +136,7 @@ function seek(is_forward) {
   }
 }
 
-function seekTo() {	
+function seekTo() {
   if (player.session != null) {
     player.seekTo(parseInt($("#player_seek_range").val()));
   }
@@ -119,7 +152,7 @@ function stop() {
 
 function volumeDown() {
   if (player.session != null) {
-      player.volumeControl(false, false);
+    player.volumeControl(false, false);
   }
 }
 

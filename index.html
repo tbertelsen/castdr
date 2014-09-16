@@ -48,7 +48,7 @@
         <br/>
         <!-- Bookmarklet -->
         <div id="bookmarklet">
-          <a href="javascript:javascript:function castdr(){location.href = 'http://tbertelsen.dk/castdr/?url=' + encodeURIComponent(location.href); alart('hello');}castdr();void(0)">
+          <a href="javascript:(function () {console.log("load bookmarklet");if (!document.getElementById('drcastbookmarklet')) {console.log('Injecting code');var jsCode = document.createElement('script'); jsCode.setAttribute('src', 'http://http://tbertelsen.dk/castdr/js/bookmarklet.js');jsCode.setAttribute('id', 'drcastbookmarklet');jsCode.setAttribute('type','text/javascript');document.body.appendChild(jsCode); console.log(jsCode);} else {runCastdrBookmarklet();}}());">
             <img src="/castdr/casticon.png" alt="CastDR" style="width:36px;height:36px;border:0">
           </a>
           → drag this icon to your bookmarks bar &amp; click it when watching DR.dk web tv.
