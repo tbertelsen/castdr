@@ -20,7 +20,7 @@ DrUrlHandler.prototype.handleUrl = function(url) {
 }
 
 DrUrlHandler.prototype.fetchProgramCard = function(slug) {
-	var url = "http://www.dr.dk/mu/api/1.1/programcard/" + slug;
+	var url = "http://www.dr.dk/muTest/api/1.1/programcard/" + slug;
 	return fetchJson(url, this.fetchManifest.bind(this));
 }
 
