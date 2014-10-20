@@ -136,7 +136,7 @@ DrUrlHandler.prototype.interpretDrLiveUrl = function(path) {
 }
 
 DrUrlHandler.prototype.fetchProgramCard = function(slug) {
-  var url = "http://www.dr.dk/muTest/api/1.1/programcard/" + slug;
+  var url = "http://www.dr.dk/mu-online/api/1.1/programcard/" + slug;
   return fetchJson(url, this.fetchManifest.bind(this));
 }
 
