@@ -13,8 +13,12 @@ DrUrlHandler.prototype.handleUrl = function(url) {
     var slugs = this.interpretDrUrl(url);
     if (slugs.isLive) {
       this.success();
-    } else {
+    } else if (slugs.hasEpisodeSlug) {
+      // Fetch programcard directly if we know which episode
       this.fetchProgramCard(slugs.episodeSlug);
+    } else {
+      // Fall back to fetch all data for the program page, if episode is unknown.
+      this.fetchPageData(slugs.episodeSlug, slugs.seriesSlug);
     }
   } catch (e) {
     console.log(e)
@@ -53,20 +57,29 @@ DrUrlHandler.prototype.interpretDrProgramUrl = function(path) {
     path = path.slice(2);
   }
 
-  if (path.length < 4) {
+  if (path.length < 3 || path[2] == "") {
     throw "Please select a program.\nURL is not long enough.";
   }
 
+  var hasEpisodeSlug = true;
+  if (path.length == 3 || path[3] == "") {
+    console.log("Only one slug. Using as series.");
+    path[3] = ""
+    hasEpisodeSlug = false;
+  }
+
   // Ensure no bad characters in ids
-  if (!(encodeURIComponent(path[2]) == path[2] &&
-    encodeURIComponent(path[3]) == path[3])) {
+  if (!(encodeURIComponent(path[2]) == path[2]) ||
+    (hasEpisodeSlug && !(encodeURIComponent(path[3]) == path[3]))) {
     throw "Bad characters in URL";
   }
 
   var slugs = {
     seriesSlug: path[2],
-    episodeSlug: path[3]
+    episodeSlug: path[3],
+    hasEpisodeSlug: hasEpisodeSlug
   };
+
   console.log("Program slugs found:");
   console.log(slugs);
   return slugs;
@@ -135,17 +148,30 @@ DrUrlHandler.prototype.interpretDrLiveUrl = function(path) {
   }
 }
 
-DrUrlHandler.prototype.fetchProgramCard = function(slug) {
-  var url = "http://www.dr.dk/mu-online/api/1.1/programcard/" + slug;
+DrUrlHandler.prototype.fetchProgramCard = function(episodeSlug) {
+  var url = "http://www.dr.dk/mu-online/api/1.2/programcard/" + episodeSlug;
   return fetchJson(url, this.fetchManifest.bind(this));
 }
 
-DrUrlHandler.prototype.fetchManifest = function(programCard) {
+DrUrlHandler.prototype.fetchPageData = function(episodeSlug, seriesSlug) {
+  var url = "http://www.dr.dk/mu-online/api/1.2/page/tv/player/" + episodeSlug + "?seriesid=" + seriesSlug;
+  return fetchJson(url, this.fetchManifest.bind(this));
+}
+
+DrUrlHandler.prototype.fetchManifest = function(programCardOrPage) {
+  var programCard = programCardOrPage
+  if (programCardOrPage.ProgramCard) {
+    programCard = programCardOrPage.ProgramCard
+  }
+
   console.log("programCard")
   console.log(programCard)
   asset = programCard.PrimaryAsset;
   console.log("asset")
   console.log(asset)
+  if (!asset) {
+    throw "Video can not be found. Are you sure it is still available online at DR TV?"
+  }
   if (asset.Kind != "VideoResource") {
     throw "Not a video link";
   }
