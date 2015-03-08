@@ -5,7 +5,7 @@ javascript:(function () {
 		if (!document.getElementById('drcastbookmarklet')) {
 			console.log('Injecting code');
 			var jsCode = document.createElement('script'); 
-	    jsCode.setAttribute('src', 'http://tbertelsen.dk/castdr/js/bookmarklet.js');
+	    jsCode.setAttribute('src', '//castdr-test.tbertelsen.dk/js/bookmarklet.js');
   	  jsCode.setAttribute('id', 'drcastbookmarklet');
   	  jsCode.setAttribute('type','text/javascript');
   	  document.body.appendChild(jsCode); 
