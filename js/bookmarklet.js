@@ -1,4 +1,4 @@
-var castDrHomeUrl = 'http://tbertelsen.dk/'
+var castDrHomeUrl = 'https://castdr-test.tbertelsen.dk/'
 
 function runCastdrBookmarklet() {
 	console.log("Running CastDr bookmarklet")
@@ -28,7 +28,7 @@ function _runCastdrBookmarklet() {
 			handleBonanza();
 			break;
 		default:
-			throw "Please use on eiher dr.dk/tv or dr.dk/Bonanza";
+			throw "Please use on eiher dr.dk/tv";
 	}
 }
 
