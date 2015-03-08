@@ -107,34 +107,34 @@ DrUrlHandler.prototype.interpretDrLiveUrl = function(path) {
     case "dr1":
       this.title = "DR1 Live";
       this.imgUrl = "/img/dr1.jpg";
-      this.mediaUrl = "http://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-1600";
+      this.mediaUrl = "https://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-1600";
       break;
     case "dr2":
       this.title = "DR2 Live";
       this.imgUrl = "/img/dr2.jpg";
-      this.mediaUrl = "http://dr02-lh.akamaihd.net/i/dr02_0@147055/master.m3u8?b=100-1600";
+      this.mediaUrl = "https://dr02-lh.akamaihd.net/i/dr02_0@147055/master.m3u8?b=100-1600";
       break;
     case "dr3":
       this.title = "DR3 Live";
       this.imgUrl = "/img/dr3.jpg";
-      this.mediaUrl = "http://dr03-lh.akamaihd.net/i/dr03_0@147056/master.m3u8?b=100-1600";
+      this.mediaUrl = "https://dr03-lh.akamaihd.net/i/dr03_0@147056/master.m3u8?b=100-1600";
       break;
     case "dr-k":
       this.title = "DR K Live";
       this.imgUrl = "/img/dr-k.jpg";
-      this.mediaUrl = "http://dr04-lh.akamaihd.net/i/dr04_0@147057/master.m3u8?b=100-1600";
+      this.mediaUrl = "https://dr04-lh.akamaihd.net/i/dr04_0@147057/master.m3u8?b=100-1600";
       break;
     case "ramasjang":
     case "dr-ramasjang":
       this.title = "DR Ramasjang Live";
       this.imgUrl = "/img/dr-ramasjang.jpg";
-      this.mediaUrl = "http://dr05-lh.akamaihd.net/i/dr05_0@147058/master.m3u8?b=100-1600";
+      this.mediaUrl = "https://dr05-lh.akamaihd.net/i/dr05_0@147058/master.m3u8?b=100-1600";
       break;
     case "ultra":
     case "dr-ultra":
       this.title = "DR ULTRA Live";
       this.imgUrl = "/img/dr-ultra.jpg";
-      this.mediaUrl = "http://dr06-lh.akamaihd.net/i/dr06_0@147059/master.m3u8?b=100-1600";
+      this.mediaUrl = "https://dr06-lh.akamaihd.net/i/dr06_0@147059/master.m3u8?b=100-1600";
       break;
     default:
       throw "Unkown live channel: " + id;
@@ -149,12 +149,12 @@ DrUrlHandler.prototype.interpretDrLiveUrl = function(path) {
 }
 
 DrUrlHandler.prototype.fetchProgramCard = function(episodeSlug) {
-  var url = "http://www.dr.dk/mu-online/api/1.2/programcard/" + episodeSlug;
+  var url = "https://www.dr.dk/mu-online/api/1.2/programcard/" + episodeSlug;
   return fetchJson(url, this.fetchManifest.bind(this));
 }
 
 DrUrlHandler.prototype.fetchPageData = function(episodeSlug, seriesSlug) {
-  var url = "http://www.dr.dk/mu-online/api/1.2/page/tv/player/" + episodeSlug + "?seriesid=" + seriesSlug;
+  var url = "https://www.dr.dk/mu-online/api/1.2/page/tv/player/" + episodeSlug + "?seriesid=" + seriesSlug;
   return fetchJson(url, this.fetchManifest.bind(this));
 }
 
