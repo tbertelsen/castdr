@@ -106,34 +106,34 @@ DrUrlHandler.prototype.interpretDrLiveUrl = function(path) {
     case "":
     case "dr1":
       this.title = "DR1 Live";
-      this.imgUrl = "/castdr/img/dr1.jpg";
+      this.imgUrl = "/img/dr1.jpg";
       this.mediaUrl = "http://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-1600";
       break;
     case "dr2":
       this.title = "DR2 Live";
-      this.imgUrl = "/castdr/img/dr2.jpg";
+      this.imgUrl = "/img/dr2.jpg";
       this.mediaUrl = "http://dr02-lh.akamaihd.net/i/dr02_0@147055/master.m3u8?b=100-1600";
       break;
     case "dr3":
       this.title = "DR3 Live";
-      this.imgUrl = "/castdr/img/dr3.jpg";
+      this.imgUrl = "/img/dr3.jpg";
       this.mediaUrl = "http://dr03-lh.akamaihd.net/i/dr03_0@147056/master.m3u8?b=100-1600";
       break;
     case "dr-k":
       this.title = "DR K Live";
-      this.imgUrl = "/castdr/img/dr-k.jpg";
+      this.imgUrl = "/img/dr-k.jpg";
       this.mediaUrl = "http://dr04-lh.akamaihd.net/i/dr04_0@147057/master.m3u8?b=100-1600";
       break;
     case "ramasjang":
     case "dr-ramasjang":
       this.title = "DR Ramasjang Live";
-      this.imgUrl = "/castdr/img/dr-ramasjang.jpg";
+      this.imgUrl = "/img/dr-ramasjang.jpg";
       this.mediaUrl = "http://dr05-lh.akamaihd.net/i/dr05_0@147058/master.m3u8?b=100-1600";
       break;
     case "ultra":
     case "dr-ultra":
       this.title = "DR ULTRA Live";
-      this.imgUrl = "/castdr/img/dr-ultra.jpg";
+      this.imgUrl = "/img/dr-ultra.jpg";
       this.mediaUrl = "http://dr06-lh.akamaihd.net/i/dr06_0@147059/master.m3u8?b=100-1600";
       break;
     default:
