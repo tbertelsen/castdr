@@ -51,9 +51,11 @@
         <!-- Bookmarklet -->
         <div id="bookmarklet">
           <a href="javascript:(function () {console.log('load bookmarklet');if (!document.getElementById('drcastbookmarklet')) {console.log('Injecting code');var jsCode = document.createElement('script'); jsCode.setAttribute('src', '//castdr-test.tbertelsen.dk/js/bookmarklet.js');jsCode.setAttribute('id', 'drcastbookmarklet');jsCode.setAttribute('type','text/javascript');document.body.appendChild(jsCode); console.log(jsCode);} else {runCastdrBookmarklet(); }}());">
-            <img src="/casticon.png" alt="CastDR" style="width:36px;height:36px;border:0">
+            <img src="/casticon.png" alt="CastDR-Test" style="width:36px;height:36px;border:0">
           </a>
           → Drag this icon to your bookmarks bar &amp; click it when watching DR.dk web tv.
+          <br/>
+          <div style="margin-left:58px"><b>Please update the bookmark.</b> A change to dr.dk broke the old bookmark, so please delete it and replace it with the new one above.<br/> Thanks.</div>
         </div>
         <!-- Controls -->
         <div class="alert alert-info" style="text-align: center; display:none;" id="controls">
